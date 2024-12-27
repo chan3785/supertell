@@ -21,17 +21,23 @@ Built on the foundation of PancakeSwap’s prediction market code, SuperTell off
 
 ## Key Feature
 
-> **Telegram-Based Platform**
+- **Telegram-Based Platform**
+  - Users can access SuperTell directly through the Telegram mini-app without needing to install additional applications.
+  - A user-friendly UI/UX allows users to predict, check results, and claim rewards seamlessly.
 
-Users can access SuperTell directly through the Telegram mini-app without needing to install additional applications.
-A user-friendly UI/UX allows users to predict, check results, and claim rewards seamlessly.
+- **Developed Using PancakeSwap Code**
+  - The platform leverages a modified version of PancakeSwap’s proven prediction market code.
+  - A thorough security audit of the smart contract is planned to ensure future robustness.
 
-> **Developed Using PancakeSwap Code**
+- **Diverse Prediction Markets**
+  - Initially, the platform focuses on cryptocurrency price predictions.
+  - Future plans include expanding to other topics like sports, weather, and more.
 
-The platform leverages a modified version of PancakeSwap’s proven prediction market code.
-A thorough security audit of the smart contract is planned to ensure future robustness.
+## Business Model
 
-> **Diverse Prediction Markets**
+**1. Token Economy:** 
+- Launch a native token for staking, governance, and enhanced predictions.
 
-Initially, the platform focuses on cryptocurrency price predictions.
-Future plans include expanding to other topics like sports, weather, and more.
+**2. Platform Fees:** 
+- When users place a bet, they pay a certain amount of platform fee.
+- If users make a profit from their bets, they pay a 2% commission on the profits.

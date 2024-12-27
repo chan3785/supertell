@@ -18,3 +18,20 @@
 SuperTell is a prediction market platform accessible through a Telegram mini-app.
 Running on the Neo MainNet, users can predict specific events (e.g., token price movements) and earn rewards based on their accuracy. 
 Built on the foundation of PancakeSwap’s prediction market code, SuperTell offers a simple and accessible user experience.
+
+## Key Feature
+
+> **Telegram-Based Platform**
+
+Users can access SuperTell directly through the Telegram mini-app without needing to install additional applications.
+A user-friendly UI/UX allows users to predict, check results, and claim rewards seamlessly.
+
+> **Developed Using PancakeSwap Code**
+
+The platform leverages a modified version of PancakeSwap’s proven prediction market code.
+A thorough security audit of the smart contract is planned to ensure future robustness.
+
+> **Diverse Prediction Markets**
+
+Initially, the platform focuses on cryptocurrency price predictions.
+Future plans include expanding to other topics like sports, weather, and more.

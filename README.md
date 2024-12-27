@@ -1,9 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b36a8e66-970a-44fe-abaa-2f93e94bc111">
-</p>
-
-<p align="center">
-  <a> <code>Neo X Grind Hackathon</code> </a>
+  <img src="https://github.com/user-attachments/assets/971f3178-acfe-4610-a026-610822261132">
 </p>
 
 <h1 align="center">SuperTell</h1>
@@ -19,4 +15,6 @@
   <img src="">
 </p>
 
-- Telegram mini app for prediction with pancakeswap.
+SuperTell is a prediction market platform accessible through a Telegram mini-app.
+Running on the Neo MainNet, users can predict specific events (e.g., token price movements) and earn rewards based on their accuracy. 
+Built on the foundation of PancakeSwap’s prediction market code, SuperTell offers a simple and accessible user experience.

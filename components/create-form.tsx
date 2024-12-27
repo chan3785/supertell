@@ -270,40 +270,6 @@ export const CreateForm: React.FC = () => {
                     </FormItem>
                   )}
                 />
-            <FormField
-              control={form.control}
-              name="up_token_uri"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>UP token URI (NFT)</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Please put token URI from NFT"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="down_token_uri"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>DOWN token URI (NFT)</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Please put token URI from NFT"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </div>
         </form>
       </Form>

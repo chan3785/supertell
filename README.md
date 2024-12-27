@@ -30,7 +30,7 @@ Built on the foundation of PancakeSwap’s prediction market code, SuperTell off
   - A user-friendly UI/UX allows users to predict, check results, and claim rewards seamlessly.
 
 - **Developed Using PancakeSwap Code**
-  - The platform leverages a modified version of PancakeSwap’s proven prediction market code.
+  - The platform leverages a modified version of proven prediction market code.
   - A thorough security audit of the smart contract is planned to ensure future robustness.
 
 - **Diverse Prediction Markets**

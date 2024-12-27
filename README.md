@@ -10,6 +10,10 @@
 
 <p align="center">Telegram Mini App <code>Prediction Market</code>.</p>
 
+<p align="center">
+  <a href="" style="color: #a77dff">NEO Contract</a> | <a href="" style="color: #a77dff">Prediction Contract</a> | <a href="" style="color: #a77dff">Telegram Mini App</a>
+</p>
+
 ## Overview
 <p align="center">
   <img src="">

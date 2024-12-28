@@ -2,6 +2,7 @@
   "name": "wnw",
   "version": "1.22.22",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -95,5 +96,5 @@
     "prettier": "3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.14"
   },
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@1.22.22"
 }

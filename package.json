@@ -1,6 +1,6 @@
 {
   "name": "wnw",
-  "version": "0.1.0",
+  "version": "1.22.22",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -94,5 +94,6 @@
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "prettier": "3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.14"
-  }
+  },
+  "packageManager": "yarn@4.5.3"
 }

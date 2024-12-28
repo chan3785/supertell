@@ -20,8 +20,8 @@ export default function Home() {
         <div className="space-x-10">
         </div>
         <div className="space-x-10">
-          <Button onClick={() => bridge()} className="bg-slate-300">Bridge</Button>
-          <h1>Move Assets From The Root Network To Ethena Prediction</h1>
+          <Button onClick={() => bridge()} className="bg-[rgb(105,227,169)]">Bridge</Button>
+          <h1>Move Assets Between The Neo X and Neo N3</h1>
         </div>
       </div>
     </main>

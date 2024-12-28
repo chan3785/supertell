@@ -12,7 +12,7 @@ export const tokenInfos = [
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880'
   },
   {
-    name: 'ENA',
+    name: 'TELL',
     address: '0xc59E3633BAAC79493d908e63626716e204A45EdF',
     image:
       'https://assets.coingecko.com/coins/images/36530/standard/ethena.png?1711701436'

@@ -18,7 +18,7 @@ export const Account = () => {
           </Button>
         ) : (
           connectors.map((connector) => (
-            <Button key={connector.uid} onClick={() => connect({ connector }) } className='bg-slate-300'>
+            <Button key={connector.uid} onClick={() => connect({ connector }) } className='bg-[rgb(105,227,169)]'>
               Connect
             </Button>
           ))

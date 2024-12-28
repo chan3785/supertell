@@ -1,0 +1,8 @@
+{
+  "neox-testnet": {
+    "WGAS10": {
+      "address": "0x1CE16390FD09040486221e912B87551E4e44Ab17",
+      "startBlock": 0
+    }
+  }
+}

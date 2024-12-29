@@ -6,23 +6,16 @@ import "../src/SuperTell.sol";
 
 contract DeploySuperTell is Script {
     function run() external {
+        
         vm.startBroadcast();
-        address _oracleAddress = ;
-        address _adminAddress = ;
-        address _operatorAddress = ;
-        uint256 _intervalSeconds = 300;
-        uint256 _bufferSeconds = 30;
-        uint256 _minBetAmount = 1000000000000000 ;
-        uint256 _oracleUpdateAllowance = 300;
-        uint256 _treasuryFee = 300;
+      
+        address supraOracleAddress = 0xBB0f96cede5728D69409340be459A864478e9222;
 
-        SuperTell superTell = new SuperTell(_oracleAddress,
-         _adminAddress,
-         _operatorAddress,
-         _intervalSeconds,
-         _bufferSeconds,
-         _minBetAmount,
-         _treasuryFee);
+        SuperTell superTell = new SuperTell(supraOracleAddress);
+
+        // Log the deployed contract address
+        console.log("SuperTell deployed at:", address(superTell));
+
 
         vm.stopBroadcast();
     }

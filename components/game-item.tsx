@@ -81,7 +81,7 @@ export const GameItem = ({ game }: any) => {
                 key={game.gameId}
               >
                 <Button className="w-26 flex h-10 items-center bg-[rgb(105,227,169)] font-semibold text-black">
-                  Enter game
+                  bet now
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

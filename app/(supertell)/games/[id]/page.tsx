@@ -84,7 +84,7 @@ export default function Page() {
 
   
   return (
-    <div className="mt-10 max-h-screen space-y-6 overflow-y-auto p-4 md:p-8">
+    <div className="mt-0 max-h-screen space-y-6 overflow-y-auto p-4 md:p-8">
       <Breadcrumbs
         className="mb-4"
         linkHref="/"
@@ -98,6 +98,9 @@ export default function Page() {
         </h1>
       </div>
 
+      <div className='flex justify-between'>
+      <div className="flex h-full w-2/3 space-x-2">
+        <div className="h-full w-full space-y-5 overflow-y-auto pr-2">
       <div className="flex space-x-6">
         <Badge className="text-F7F8F8 rounded-3xl bg-[#575757] p-1.5 px-5 text-xs">
           {tokenName} / USD
@@ -109,17 +112,18 @@ export default function Page() {
           {game?.category || 'Loading...'}
         </Badge>
       </div>
-
-      <div className="flex h-full space-x-8">
-        <div className="h-full w-2/3 space-y-20 overflow-y-auto pr-2">
           <GameDetail />
           <GameDetailComment />
         </div>
 
-        <div className="h-full w-1/3 space-y-4 overflow-y-auto pl-2">
+        
+      </div>
+      <div className="h-full w-1/3 space-y-4 overflow-y-auto pl-2">
           <GameDetailVote />
         </div>
       </div>
+
+      
     </div>
   );
 }

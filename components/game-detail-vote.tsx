@@ -25,7 +25,7 @@ import { ethers } from 'ethers';
 export function GameDetailVote() {
   const ETHENA_FACTORY_ADDRESS = '0xFa273F31D51DD752f9893024C0A88a792CB5d093';
   const searchParams = useSearchParams();
-  const key = searchParams.get('key');
+  const key = searchParams ? searchParams.get('key') : null;
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
   const [startPrice, setStartPrice] = useState<number | null>(null);
   const [betUp, setBetUp] = useState<boolean | null>(null); // Up/Down 선택 상태

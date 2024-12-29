@@ -16,7 +16,7 @@
 
 ## Overview
 <p align="center">
-  <img src="">
+  <img src="https://github.com/user-attachments/assets/0dee32ce-a672-4c1f-abf4-e2b0ddfa86b6">
 </p>
 
 SuperTell is a prediction market platform accessible through a Telegram mini-app.

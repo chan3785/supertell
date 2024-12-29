@@ -6,7 +6,7 @@ export default function Page() {
   const { isMobile } = useResponsive();
 
   return (
-    <div className={`space-y-6 p-4 md:p-8 overflow-y-scroll h-full max-h-[calc(100vh-100px)] ${isMobile ? 'mt-16' : 'mt-10'}`}>
+    <div className={`space-y-6 p-4 md:p-8 overflow-y-scroll h-full max-h-[calc(100vh-100px)] ${isMobile ? 'mt-16' : ''}`}>
             <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center`}>
         <img src="/neoxgrind.png" alt="Description of image" className={`w-23 h-23 ${isMobile ? 'hidden' : ''}`} />
         <div className="ml-4">

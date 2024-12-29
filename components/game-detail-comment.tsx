@@ -30,7 +30,7 @@ const ETHENA_FACTORY_ADDRESS = '0xFa273F31D51DD752f9893024C0A88a792CB5d093';
 
 export const GameDetailComment = () => {
   const searchParams = useSearchParams();
-  const key = searchParams.get('key');
+  const key = searchParams ? searchParams.get('key') : null;
   const [address, setTokenAddress] = useState(''); // Input 필드에 입력된 숫자
 
 

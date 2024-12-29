@@ -1,14 +1,23 @@
+'use client';
 import { GameList } from '@/components/game-list';
+import { useResponsive } from '@/hooks/useResponsive';
 
-export default function page() {
+export default function Page() {
+  const { isMobile } = useResponsive();
+
   return (
-    <div className="mt-10 space-y-6 p-4 md:p-8 overflow-y-scroll h-full max-h-[calc(100vh-100px)]">
-      <h2 className="scroll-m-20 text-4xl font-bold tracking-tight lg:text-3xl">
-        SuperTell Price Prediction
-      </h2>
-      <h1 className="mb-20 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-      Get precise news and predict the price
-      </h1>
+    <div className={`space-y-6 p-4 md:p-8 overflow-y-scroll h-full max-h-[calc(100vh-100px)] ${isMobile ? 'mt-16' : 'mt-10'}`}>
+            <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center`}>
+        <img src="/neoxgrind.jpeg" alt="Description of image" className={`w-20 h-20 ${isMobile ? 'hidden' : ''}`} />
+        <div className="ml-4">
+          <h2 className={`scroll-m-20 font-bold tracking-tight ${isMobile ? 'text-2xl' : 'text-4xl lg:text-3xl'}`}>
+            SuperTell Price Prediction
+          </h2>
+          <h1 className={`scroll-m-20 font-extrabold tracking-tight ${isMobile ? 'text-3xl' : 'text-4xl lg:text-5xl'}`}>
+            Get precise news and predict the price
+          </h1>
+        </div>
+      </div>
       <div>
         <GameList/>
       </div>

@@ -5,7 +5,6 @@ import type { Metadata } from 'next';
 import NextTopLoader from 'nextjs-toploader';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ScreenSizeProvider } from '@/contexts/ScreenSizeContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,12 +21,10 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} overflow-x-hidden overflow-y-scroll`}>
         <NextTopLoader />
-        <ScreenSizeProvider>
         <Providers>
           <Toaster />
           {children}
         </Providers>
-        </ScreenSizeProvider>
       </body>
     </html>
   );

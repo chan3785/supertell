@@ -13,6 +13,7 @@ export default function DashboardLayout({
           <div className="container relative">{children}</div>
         </main>
       </div>
+      
     </>
   );
 }

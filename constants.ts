@@ -12,10 +12,10 @@ export const tokenInfos = [
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880'
   },
   {
-    name: 'TELL',
+    name: 'NEO',
     address: '0xc59E3633BAAC79493d908e63626716e204A45EdF',
     image:
-      'https://assets.coingecko.com/coins/images/36530/standard/ethena.png?1711701436'
+      'https://assets.coingecko.com/coins/images/480/standard/NEO_512_512.png?1696501735'
   },
   {
     name: 'LINK',
@@ -24,16 +24,16 @@ export const tokenInfos = [
       'https://assets.coingecko.com/coins/images/877/standard/chainlink-new-logo.png?1696502009'
   },
   {
-    name: 'USDe',
+    name: 'NEO',
     address: '0x55ec7c3ed0d7CB5DF4d3d8bfEd2ecaf28b4638fb',
     image:
-      'https://assets.coingecko.com/coins/images/33613/standard/USDE.png?1716355685'
+      'https://assets.coingecko.com/coins/images/480/standard/NEO_512_512.png?1696501735'
   },
   {
-    name: 'sUSDe',
+    name: 'SOL',
     address: '0x6f7be09227d98Ce1Df812d5Bc745c0c775507E92',
     image:
-      'https://assets.coingecko.com/coins/images/33613/standard/USDE.png?1716355685'
+      'https://assets.coingecko.com/coins/images/4128/standard/solana.png?1718769756'
   },
   {
     name: 'DAI',

@@ -21,7 +21,7 @@ export default function Page() {
   const [duration, setDuration] = useState('');
   const ETHENA_FACTORY_ADDRESS = '0xFa273F31D51DD752f9893024C0A88a792CB5d093';
   const searchParams = useSearchParams();
-  const key = searchParams.get('key');
+  const key = searchParams ? searchParams.get('key') : null;
 
 
   const { data: game }: any = useReadContract({

@@ -22,10 +22,10 @@ import {
 const chainData = [
   { label: "Bitcoin", value: "0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43" },
   { label: "Ethereum", value: "0x694AA1769357215DE4FAC081bf1f309aDC325306" },
-  { label: "Ethena", value: "0xc59E3633BAAC79493d908e63626716e204A45EdF" },
+  { label: "Neo X", value: "0xc59E3633BAAC79493d908e63626716e204A45EdF" },
   { label: "Chainlink", value: "0xc59E3633BAAC79493d908e63626716e204A45Edc" },
-  { label: "USDe", value: "0x55ec7c3ed0d7CB5DF4d3d8bfEd2ecaf28b4638fb" },
-  { label: "sUSDe", value: "0x6f7be09227d98Ce1Df812d5Bc745c0c775507E92" },
+  { label: "Neo X", value: "0x55ec7c3ed0d7CB5DF4d3d8bfEd2ecaf28b4638fb" },
+  { label: "Solana", value: "0x6f7be09227d98Ce1Df812d5Bc745c0c775507E92" },
   { label: "DAI", value: "0x14866185B1962B63C3Ea9E03Bc1da838bab34C19" },
 ];
 

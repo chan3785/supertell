@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <div className="supports-backdrop-blur:bg-background/60 fixed left-0 right-0 top-0 z-20 border-b bg-background/95 backdrop-blur">
-      <nav className={`ml-20 mr-20 flex items-center px-4 ${isMobile ? 'flex-col h-75 justify-center' : 'flex-row h-20  justify-between'}`}>
+      <nav className={`ml-20 mr-20 flex items-center px-4 ${isMobile ? 'flex-col h-30 justify-center' : 'flex-row h-20  justify-between'}`}>
         <div className={`flex items-center ${isMobile ? 'space-y-1 flex-col justify-center' : 'space-x-4 flex-row'}`}>
           <Link href={'/'}>
             <Button className={`w-${isMobile ? '[50px]' : '[50px]'} ml-7 h-${isMobile ? '[30px]' : '[15px]'} font-bold`} variant="ghost">
@@ -37,7 +37,7 @@ export default function Header() {
             </Button>
           </Link>
         </div>
-        <div className={`flex items-center gap-2 ${isMobile ? 'mb-[4px] justify-center' : ''}`}>
+        <div className={`flex items-center gap-2 ${isMobile ? 'mb-[6px] justify-center' : ''}`}>
           <Account />
         </div>
       </nav>

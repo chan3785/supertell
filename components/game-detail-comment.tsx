@@ -60,7 +60,7 @@ useEffect(() => {
         <div className="w-1/2 space-y-4">
           <div className="space-y-4">
             <div className="grid gap-6">
-              {walletAddresses.slice(0, 4).map((address, index) => (
+              {walletAddresses.slice(0, 7).map((address, index) => (
                 <div
                   key={index}
                   className="flex items-center justify-between space-x-4"
@@ -75,7 +75,7 @@ useEffect(() => {
                         {shortenAddress(address)}
                       </p>
                       <p className="text-sm font-medium leading-none">
-                        Hey its real
+                        price will be go up
                       </p>
                     </div>
                   </div>

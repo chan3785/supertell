@@ -21,19 +21,9 @@ export default function Header() {
               Price Prediction
             </Button>
           </Link>
-          <Link href={'/charge'}>
-            <Button className={`w-${isMobile ? '[20px]' : '[30px]'} ml-7 h-${isMobile ? '[6px]' : '[8px]'} font-semibold ${isMobile ? 'hidden' : 'block'}`} variant="ghost">
-              Charge
-            </Button>
-          </Link>
           <Link href={'/game-info'}>
             <Button className={`w-${isMobile ? '[20px]' : '[30px]'} ml-7 h-${isMobile ? '[6px]' : '[8px]'} font-semibold ${isMobile ? 'hidden' : 'block'}`} variant="ghost">
               Game info
-            </Button>
-          </Link>
-          <Link href={'/create-bet'}>
-            <Button className={`w-${isMobile ? '[20px]' : '[30px]'} ml-7 h-${isMobile ? '[6px]' : '[8px]'} ${isMobile ? 'mb-[4px]' : ''} bg-[rgb(105,227,169)] font-semibold`}>
-              Create Game
             </Button>
           </Link>
         </div>

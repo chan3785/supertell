@@ -265,7 +265,7 @@ export function GameDetailVote() {
             </div>
             <div className=" text-end text-xs">
               <div>Total Pool Amount:</div>
-              <div>{Number(totalPoolAmount) / 10 ** 18} USDe</div>
+              <div>{Number(totalPoolAmount) / 10 ** 18} NEO</div>
             </div>
           </div>
         </div>
@@ -400,13 +400,13 @@ export function GameDetailVote() {
           />
 
           <Image
-            src="https://assets.coingecko.com/coins/images/33613/standard/USDE.png?1716355685"
+            src="https://assets.coingecko.com/coins/images/480/standard/NEO_512_512.png?1696501735"
             alt="Logo"
             width={25}
             height={25}
             className="mr-0"
           />
-          <span className=" text-xl font-bold text-black">USDe</span>
+          <span className=" text-xl font-bold text-black">NEO</span>
         </div>
         <ComboboxDemo />
           Comming Soon!

@@ -13,7 +13,7 @@ import {
 import { ChartContainer, ChartConfig } from '@/components/ui/chart';
 import { useReadContract, useWriteContract } from 'wagmi';
 import PRED_ABI from '@/abi/INEOPRE.abi';
-import TOKEN_ABI from '@/abi/ERC20.abi'
+import TOKEN_ABI from '@/abi/ERC20.abi';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
@@ -23,52 +23,29 @@ import { ComboboxDemo } from './command';
 import { ethers } from 'ethers';
 
 export function GameDetailVote() {
-  const ETHENA_FACTORY_ADDRESS = '0xFa273F31D51DD752f9893024C0A88a792CB5d093';
+  const NEO_CONTRACT_ADDRESS = '0x45c2B0Eff2b489623C7e55083BE991f26b541B70';
   const searchParams = useSearchParams();
   const key = searchParams ? searchParams.get('key') : null;
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
   const [startPrice, setStartPrice] = useState<number | null>(null);
   const [betUp, setBetUp] = useState<boolean | null>(null); // Up/Down 선택 상태
-  const [isApproved, setApprove] = useState<boolean | null>(false); // Up/Down 선택 상태
   const [amount, setAmount] = useState(''); // Input 필드에 입력된 숫자
-  const [clicked, setClicked] = useState(false);
-  const url = 'https://bnb-wnw.online/';
-  const text = `ADF referral share ${url}`;
-  const encodedText = encodeURIComponent(text);
-  const encodedUrl = encodeURIComponent(url);
-
-  const TOKEN_ADDRESS = "0xf805ce4F96e0EdD6f0b6cd4be22B34b92373d696"; // ERC-20 토큰 컨트랙트 주소
-  const SPENDER_ADDRESS = ethers.getAddress("0xFa273F31D51DD752f9893024C0A88a792CB5d093"); // 권한을 줄 스마트 컨트랙트 주소
-  
-
-  const shareTwitter = () => {
-    const via = 'Wise and Weird';
-    const hashtags = 'Prediction,Price,BNB,BSC';
-    const shareUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&via=${via}&hashtags=${hashtags}`;
-    window.open(shareUrl, '_blank');
-  };
 
   const { data: game }: any = useReadContract({
-    address: ETHENA_FACTORY_ADDRESS,
+    address: NEO_CONTRACT_ADDRESS,
     abi: PRED_ABI,
-    functionName: 'getGame',
-    args: [key]
+    functionName: 'getCurrentRound'
   });
 
-  
-
-  
-
-  const betAmount = BigInt(Math.floor(Number(amount) * 10 ** 18));
-
   useEffect(() => {
+    console.log('get current round', game);
     if (game) {
-      const startPrice = Number(game.markedPrice) / 10 ** 8;
+      const startPrice = Number(game.startPrice) / 10 ** 8;
       setStartPrice(startPrice);
       const initialPriceChange = (Math.random() * 3 - 1) * 0.01;
       const initialPrice = Math.max(startPrice * (1 + initialPriceChange), 0);
       setCurrentPrice(initialPrice);
-      
+
       const intervalId = setInterval(() => {
         const priceChange = (Math.random() * 3 - 1) * 0.01;
         const newPrice = Math.max(startPrice * (1 + priceChange), 0);
@@ -79,56 +56,44 @@ export function GameDetailVote() {
     }
   }, [game]);
 
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 로컬 스토리지에서 상태 로드
-    const storedState = localStorage.getItem(`buttonClicked_${key}`);
-    if (storedState === 'true') {
-      setClicked(true);
-    }
-  }, [game]);
-
   const { writeContract } = useWriteContract();
 
-  const handleBet = async () => {
+  const BetUp = async () => {
     try {
+      writeContract({
+        abi: PRED_ABI,
+        address: NEO_CONTRACT_ADDRESS,
+        functionName: 'betUp'
+      });
+    } catch (error) {
+      console.error('Transaction failed', error);
+    }
+  };
 
-    writeContract({
-      abi: PRED_ABI,
-      address: ETHENA_FACTORY_ADDRESS,
-      functionName: 'bet',
-      args: [game.gameId, betUp, betAmount],
-    });
-    console.log("bet")
-    setClicked(true);
-    localStorage.setItem(`buttonClicked_${key}`, 'true');
-  }catch (error) {
-    console.error('Transaction failed', error);
-  }
-};
-
-  const handleApprove = async () => {
-    writeContract({
-      abi: TOKEN_ABI,
-      address: TOKEN_ADDRESS,
-      functionName: 'approve',
-      args: [SPENDER_ADDRESS, betAmount],
-    });
-    setApprove(true);
-  }
-  
-
-  useEffect(() => {
-    console.log(isApproved)
-  }, [betUp,isApproved])
+  const BetDown = async () => {
+    try {
+      writeContract({
+        abi: PRED_ABI,
+        address: NEO_CONTRACT_ADDRESS,
+        functionName: 'betDown'
+      });
+    } catch (error) {
+      console.error('Transaction failed', error);
+    }
+  };
 
   if (!game) {
     console.log('undefined');
     return <></>;
   }
-  const tokenInfo = tokenInfos.find((item) => item.address === String(game.priceFeed));
+  const tokenInfo = tokenInfos.find(
+    (item) => item.address == '0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43'
+  );
 
-  const upAmount = game.upAmount ? BigInt(game.upAmount) : BigInt(0);
-  const downAmount = game.downAmount ? BigInt(game.downAmount) : BigInt(0);
+  const upAmount = game.totalUpAmount ? BigInt(game.totalUpAmount) : BigInt(0);
+  const downAmount = game.totalDownAmount
+    ? BigInt(game.totalDownAmount)
+    : BigInt(0);
   const totalPoolAmount = upAmount + downAmount;
 
   const chartConfig: ChartConfig = {
@@ -150,16 +115,14 @@ export function GameDetailVote() {
     }
   ];
 
-  
-
-  const endDate = Number(game.startTime + game.duration) * 1000;
+  const endDate = Number(game.closeTime) * 1000;
   const timeRemaining = endDate - Date.now();
   const oneDayInMs = 24 * 60 * 60 * 1000;
 
   const renderStatusButtons = () => {
     const buttons = [];
 
-    if (game.isBetEnded) {
+    if (game.resolved) {
       buttons.push(
         <div
           key="end"
@@ -231,9 +194,7 @@ export function GameDetailVote() {
                       <div className="flex items-center text-green-600">
                         <FaArrowUp className="mr-1" />
                         {Number(
-                          ((currentPrice - startPrice) /
-                          startPrice) *
-                            100
+                          ((currentPrice - startPrice) / startPrice) * 100
                         ).toFixed(2)}
                         %
                       </div>
@@ -241,9 +202,7 @@ export function GameDetailVote() {
                       <div className="flex items-center text-red-600">
                         <FaArrowDown className="mr-1" />
                         {Number(
-                          ((startPrice - currentPrice) /
-                          startPrice) *
-                            100
+                          ((startPrice - currentPrice) / startPrice) * 100
                         ).toFixed(2)}
                         %
                       </div>
@@ -259,13 +218,11 @@ export function GameDetailVote() {
           <div className="flex flex-col">
             <div className="font-bold">
               Started: ${' '}
-              {startPrice
-                ? `${startPrice?.toFixed(2)}`
-                : 'Loading...'}
+              {startPrice ? `${startPrice?.toFixed(2)}` : 'Loading...'}
             </div>
             <div className=" text-end text-xs">
               <div>Total Pool Amount:</div>
-              <div>{Number(totalPoolAmount) / 10 ** 18} NEO</div>
+              <div>{Number(totalPoolAmount) / 10 ** 18} GAS</div>
             </div>
           </div>
         </div>
@@ -336,29 +293,6 @@ export function GameDetailVote() {
             <div className="flex items-center text-2xl font-bold">Predict</div>
             <div className="text-sm font-bold">Ended Price would be...</div>
           </div>
-          <div>
-            <button onClick={shareTwitter}>
-              <svg
-                width="25"
-                height="25"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clip-path="url(#clip0_451_295)">
-                  <path
-                    d="M15 13.4C14.3667 13.4 13.8 13.65 13.3667 14.0416L7.425 10.5833C7.46667 10.3916 7.5 10.2 7.5 9.99996C7.5 9.79996 7.46667 9.60829 7.425 9.41663L13.3 5.99163C13.75 6.40829 14.3417 6.66663 15 6.66663C16.3833 6.66663 17.5 5.54996 17.5 4.16663C17.5 2.78329 16.3833 1.66663 15 1.66663C13.6167 1.66663 12.5 2.78329 12.5 4.16663C12.5 4.36663 12.5333 4.55829 12.575 4.74996L6.7 8.17496C6.25 7.75829 5.65833 7.49996 5 7.49996C3.61667 7.49996 2.5 8.61663 2.5 9.99996C2.5 11.3833 3.61667 12.5 5 12.5C5.65833 12.5 6.25 12.2416 6.7 11.825L12.6333 15.2916C12.5917 15.4666 12.5667 15.65 12.5667 15.8333C12.5667 17.175 13.6583 18.2666 15 18.2666C16.3417 18.2666 17.4333 17.175 17.4333 15.8333C17.4333 14.4916 16.3417 13.4 15 13.4ZM15 3.33329C15.4583 3.33329 15.8333 3.70829 15.8333 4.16663C15.8333 4.62496 15.4583 4.99996 15 4.99996C14.5417 4.99996 14.1667 4.62496 14.1667 4.16663C14.1667 3.70829 14.5417 3.33329 15 3.33329ZM5 10.8333C4.54167 10.8333 4.16667 10.4583 4.16667 9.99996C4.16667 9.54163 4.54167 9.16663 5 9.16663C5.45833 9.16663 5.83333 9.54163 5.83333 9.99996C5.83333 10.4583 5.45833 10.8333 5 10.8333ZM15 16.6833C14.5417 16.6833 14.1667 16.3083 14.1667 15.85C14.1667 15.3916 14.5417 15.0166 15 15.0166C15.4583 15.0166 15.8333 15.3916 15.8333 15.85C15.8333 16.3083 15.4583 16.6833 15 16.6833Z"
-                    fill="#323232"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_451_295">
-                    <rect width="20" height="20" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-            </button>
-          </div>
         </div>
 
         <div className="grid grid-cols-2">
@@ -367,10 +301,8 @@ export function GameDetailVote() {
             <img
               src="/ButtonUp.png"
               alt="Vote Up"
-              className={`w-200 h-110 cursor-pointer object-contain transition-transform duration-75 active:scale-95 active:opacity-75 ${
-                betUp === true ? 'opacity-100' : 'opacity-50'
-              }`}
-              onClick={() => setBetUp(true)}
+              className="w-200 h-110 cursor-pointer object-contain transition-transform duration-75 active:scale-95 active:opacity-75"
+              onClick={() => BetUp()}
             />
           </div>
           <div className="grid items-center justify-center gap-2 text-center">
@@ -378,15 +310,10 @@ export function GameDetailVote() {
             <img
               src="/ButtonDown.png"
               alt="Vote Down"
-              className={`w-200 h-100 cursor-pointer object-contain transition-transform duration-75 active:scale-95 active:opacity-75 ${
-                betUp === false ? 'opacity-100' : 'opacity-50'
-              }`}
-              onClick={() => setBetUp(false)}
+              className="w-200 h-100 cursor-pointer object-contain transition-transform duration-75 active:scale-95 active:opacity-75"
+              onClick={() => BetDown()}
             />
           </div>
-        </div>
-        <div className="flex flex-row justify-between">
-          <div className="flex items-center font-bold">Bet Amount</div>
         </div>
         <div className="flex items-center gap-2">
           <input
@@ -400,20 +327,14 @@ export function GameDetailVote() {
           />
 
           <Image
-            src="https://assets.coingecko.com/coins/images/480/standard/NEO_512_512.png?1696501735"
+            src="https://assets.coingecko.com/coins/images/858/standard/GAS_512_512.png?1696501992"
             alt="Logo"
             width={25}
             height={25}
             className="mr-0"
           />
-          <span className=" text-xl font-bold text-black">NEO</span>
+          <span className=" text-xl font-bold text-black">GAS</span>
         </div>
-          <button
-            className={'h-[55px] w-[335px] rounded-2xl font-semibold text-black shadow-md transition-transform duration-75 focus:outline-none bg-slate-300 hover:shadow-lg active:scale-95 active:bg-gray-200'}
-            onClick={isApproved ? handleBet : handleApprove}
-          >
-            {isApproved ? 'Confirm' : 'Approve'}
-          </button>
       </CardContent>
       <button
         className="text-bold rounded bg-white"
@@ -421,7 +342,7 @@ export function GameDetailVote() {
           if (currentPrice !== null) {
             writeContract({
               abi: PRED_ABI,
-              address: ETHENA_FACTORY_ADDRESS,
+              address: NEO_CONTRACT_ADDRESS,
               functionName: 'endGame',
               args: [game.gameId]
             });

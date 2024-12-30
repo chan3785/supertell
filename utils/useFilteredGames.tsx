@@ -1,19 +1,16 @@
 import { useReadContract } from 'wagmi';
 import PRED_ABI from '@/abi/INEOPRE.abi';
 
-const ETHENA_FACTORY_ADDRESS = '0xFa273F31D51DD752f9893024C0A88a792CB5d093';
+const NEO_CONTRACT_ADDRESS = '0x45c2B0Eff2b489623C7e55083BE991f26b541B70';
 
 export const useFilteredGames = () => {
-  const { data: allGames }: any = useReadContract({
-    address: ETHENA_FACTORY_ADDRESS,
+  const { allGames }: any = useReadContract({
+    address: NEO_CONTRACT_ADDRESS,
     abi: PRED_ABI,
-    functionName: 'getGameList'
+    functionName: 'getCurrentRound'
   });
 
-  console.log(allGames)
+  console.log(allGames);
 
-  const filteredGames = allGames?.filter((game: any) => game?.gameId !== BigInt(0));
-
-
-  return { filteredGames };
+  return { allGames };
 };

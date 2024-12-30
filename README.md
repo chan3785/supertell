@@ -19,23 +19,29 @@
   <img src="https://github.com/user-attachments/assets/0dee32ce-a672-4c1f-abf4-e2b0ddfa86b6">
 </p>
 
-SuperTell is a prediction market platform accessible through a Telegram mini-app.
-Running on the Neo MainNet, users can predict specific events (e.g., token price movements) and earn rewards based on their accuracy. 
-Built on the foundation of PancakeSwap’s prediction market code, SuperTell offers a simple and accessible user experience.
+SuperTell is a Telegram-based prediction market platform on Neo Mainnet. 
+It uses Supra Oracle for real-time token prices, allowing users to predict events and earn rewards. 
+Starting with crypto, it plans to expand to sports, weather, and more.
 
 ## Key Feature
 
-- **Telegram-Based Platform**
-  - Users can access SuperTell directly through the Telegram mini-app without needing to install additional applications.
-  - A user-friendly UI/UX allows users to predict, check results, and claim rewards seamlessly.
+#### **1. Telegram Access**  
+- **Seamless Integration**: SuperTell operates as a mini-app within Telegram, eliminating the need for additional downloads or installations.  
+- **User-Friendly Interface**: The platform is designed for an intuitive experience, enabling users to easily place predictions, view results, and claim rewards in a few simple steps.  
+- **Broad Accessibility**: Telegram's global reach ensures that SuperTell can be accessed by a wide audience, enhancing user adoption.
 
-- **Developed Using PancakeSwap Code**
-  - The platform leverages a modified version of proven prediction market code.
-  - A thorough security audit of the smart contract is planned to ensure future robustness.
+#### **2. Real-Time Data Feeds**  
+- **Powered by Supra Oracle**: SuperTell integrates Supra Oracle to provide live, accurate token price data.  
+- **Dynamic Predictions**: Real-time updates ensure predictions are based on the latest market conditions, making the platform reliable and engaging.  
+- **Enhanced User Experience**: By leveraging cutting-edge oracle technology, SuperTell ensures transparency and accuracy in prediction outcomes.
 
-- **Diverse Prediction Markets**
-  - Initially, the platform focuses on cryptocurrency price predictions.
-  - Future plans include expanding to other topics like sports, weather, and more.
+#### **3. Diverse Prediction Markets**  
+- **Crypto Focus**: Initially focuses on cryptocurrency price predictions, catering to the rapidly growing crypto audience.  
+- **Future Expansion**: Plans to broaden the scope to include other prediction categories, such as:  
+  - **Sports**: Predict match outcomes or player performances.  
+  - **Weather**: Bet on weather conditions or events.  
+  - **Global Trends**: Expand to various topics like entertainment, politics, and more.  
+- **Inclusive Platform**: Aims to attract diverse users by offering a wide range of prediction opportunities.
 
 ## Business Model
 

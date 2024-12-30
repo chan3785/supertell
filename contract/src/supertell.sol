@@ -15,7 +15,6 @@ contract SuperTell is Pausable, Ownable, ReentrancyGuard {
     uint256 public currentEpoch;
     uint256 public constant EPOCH_LENGTH = 24 hours;
     uint256 public constant BUFFER_PERIOD = 30 minutes;
-    uint256 public constant MIN_BET_AMOUNT = 1e8;
     uint256 public constant TREASURY_FEE = 300; // 3%
     uint256 public treasuryAmount;
 
@@ -72,34 +71,34 @@ contract SuperTell is Pausable, Ownable, ReentrancyGuard {
         emit RoundStarted(currentEpoch, block.timestamp);
     }
 
-    function betUp() external payable whenNotPaused nonReentrant {
-        _placeBet(true);
+    function betUp(address user, uint256 amount) external payable whenNotPaused nonReentrant {
+        _placeBet(true, user, amount);
     }
 
-    function betDown() external payable whenNotPaused nonReentrant {
-        _placeBet(false);
+    function betDown(address user, uint256 amount) external payable whenNotPaused nonReentrant {
+        _placeBet(false, user, amount);
     }
 
-    function _placeBet(bool isUp) private {
-        require(msg.value >= MIN_BET_AMOUNT, "Bet below minimum");
+    function _placeBet(bool isUp, address user, uint256 amount) private {
         require(block.timestamp < rounds[currentEpoch].closeTime, "Round closed");
-        require(userBets[currentEpoch][msg.sender].amount == 0, "Already bet");
+        require(userBets[currentEpoch][user].amount == 0, "Already bet");
+        require(msg.value == amount, "Invalid amount");
 
         Round storage round = rounds[currentEpoch];
         if (isUp) {
-            round.totalUpAmount += msg.value;
+            round.totalUpAmount += amount;
         } else {
-            round.totalDownAmount += msg.value;
+            round.totalDownAmount += amount;
         }
-        round.totalAmount += msg.value;
+        round.totalAmount += amount;
 
-        userBets[currentEpoch][msg.sender] = UserBet({
+        userBets[currentEpoch][user] = UserBet({
             isUp: isUp,
-            amount: msg.value,
+            amount: amount,
             claimed: false
         });
 
-        emit BetPlaced(currentEpoch, msg.sender, isUp, msg.value);
+        emit BetPlaced(currentEpoch, user, isUp, amount);
 
         if (_shouldResolveRound(currentEpoch - 1)) {
             _resolveRound(currentEpoch - 1);
@@ -174,7 +173,6 @@ contract SuperTell is Pausable, Ownable, ReentrancyGuard {
         _unpause();
     }
     
-    // View functions
     function getCurrentRound() external view returns (Round memory) {
         return rounds[currentEpoch];
     }
@@ -182,6 +180,28 @@ contract SuperTell is Pausable, Ownable, ReentrancyGuard {
     function getUserBet(uint256 epoch, address user) external view returns (UserBet memory) {
         return userBets[epoch][user];
     }
-    
+     function getCurrentEpoch() external view returns (uint256) {
+        return currentEpoch;
+    }
+
+    function getUserBetEpochs(address user) external view returns (uint256[] memory) {
+        uint256[] memory epochs = new uint256[](currentEpoch);
+        uint256 count = 0;
+        
+        for (uint256 i = 1; i <= currentEpoch; i++) {
+            if (userBets[i][user].amount > 0) {
+                epochs[count] = i;
+                count++;
+            }
+        }
+        
+        uint256[] memory result = new uint256[](count);
+        for (uint256 i = 0; i < count; i++) {
+            result[i] = epochs[i];
+        }
+        
+        return result;
+    }
+
     receive() external payable {}
 }

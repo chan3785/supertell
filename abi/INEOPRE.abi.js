@@ -2,12 +2,7 @@ const PRED_ABI = [
   {
     type: 'constructor',
     inputs: [
-      { name: '_pullOracleAddress', type: 'address', internalType: 'address' },
-      {
-        name: '_storageOracleAddress',
-        type: 'address',
-        internalType: 'address'
-      }
+      { name: '_oracleAddress', type: 'address', internalType: 'address' }
     ],
     stateMutability: 'nonpayable'
   },
@@ -16,7 +11,7 @@ const PRED_ABI = [
     type: 'function',
     name: 'BTC_PAIR_INDEX',
     inputs: [],
-    outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
+    outputs: [{ name: '', type: 'uint64', internalType: 'uint64' }],
     stateMutability: 'view'
   },
   {
@@ -50,14 +45,14 @@ const PRED_ABI = [
   {
     type: 'function',
     name: 'betDown',
-    inputs: [{ name: '_bytesProof', type: 'bytes', internalType: 'bytes' }],
+    inputs: [],
     outputs: [],
     stateMutability: 'payable'
   },
   {
     type: 'function',
     name: 'betUp',
-    inputs: [{ name: '_bytesProof', type: 'bytes', internalType: 'bytes' }],
+    inputs: [],
     outputs: [],
     stateMutability: 'payable'
   },
@@ -88,18 +83,8 @@ const PRED_ABI = [
           { name: 'epoch', type: 'uint256', internalType: 'uint256' },
           { name: 'startTime', type: 'uint256', internalType: 'uint256' },
           { name: 'closeTime', type: 'uint256', internalType: 'uint256' },
-          { name: 'startPrice', type: 'uint256', internalType: 'uint256' },
-          {
-            name: 'startPriceDecimals',
-            type: 'uint256',
-            internalType: 'uint256'
-          },
-          { name: 'closePrice', type: 'uint256', internalType: 'uint256' },
-          {
-            name: 'closePriceDecimals',
-            type: 'uint256',
-            internalType: 'uint256'
-          },
+          { name: 'startPrice', type: 'int256', internalType: 'int256' },
+          { name: 'closePrice', type: 'int256', internalType: 'int256' },
           { name: 'totalUpAmount', type: 'uint256', internalType: 'uint256' },
           { name: 'totalDownAmount', type: 'uint256', internalType: 'uint256' },
           { name: 'totalAmount', type: 'uint256', internalType: 'uint256' },
@@ -132,10 +117,12 @@ const PRED_ABI = [
   },
   {
     type: 'function',
-    name: 'initializeRound',
-    inputs: [{ name: '_bytesProof', type: 'bytes', internalType: 'bytes' }],
-    outputs: [],
-    stateMutability: 'nonpayable'
+    name: 'oracle',
+    inputs: [],
+    outputs: [
+      { name: '', type: 'address', internalType: 'contract ISupraSValueFeed' }
+    ],
+    stateMutability: 'view'
   },
   {
     type: 'function',
@@ -173,32 +160,12 @@ const PRED_ABI = [
       { name: 'epoch', type: 'uint256', internalType: 'uint256' },
       { name: 'startTime', type: 'uint256', internalType: 'uint256' },
       { name: 'closeTime', type: 'uint256', internalType: 'uint256' },
-      { name: 'startPrice', type: 'uint256', internalType: 'uint256' },
-      { name: 'startPriceDecimals', type: 'uint256', internalType: 'uint256' },
-      { name: 'closePrice', type: 'uint256', internalType: 'uint256' },
-      { name: 'closePriceDecimals', type: 'uint256', internalType: 'uint256' },
+      { name: 'startPrice', type: 'int256', internalType: 'int256' },
+      { name: 'closePrice', type: 'int256', internalType: 'int256' },
       { name: 'totalUpAmount', type: 'uint256', internalType: 'uint256' },
       { name: 'totalDownAmount', type: 'uint256', internalType: 'uint256' },
       { name: 'totalAmount', type: 'uint256', internalType: 'uint256' },
       { name: 'resolved', type: 'bool', internalType: 'bool' }
-    ],
-    stateMutability: 'view'
-  },
-  {
-    type: 'function',
-    name: 'supra_pull',
-    inputs: [],
-    outputs: [
-      { name: '', type: 'address', internalType: 'contract ISupraOraclePull' }
-    ],
-    stateMutability: 'view'
-  },
-  {
-    type: 'function',
-    name: 'supra_storage',
-    inputs: [],
-    outputs: [
-      { name: '', type: 'address', internalType: 'contract ISupraSValueFeed' }
     ],
     stateMutability: 'view'
   },
@@ -220,16 +187,6 @@ const PRED_ABI = [
     type: 'function',
     name: 'unpause',
     inputs: [],
-    outputs: [],
-    stateMutability: 'nonpayable'
-  },
-  {
-    type: 'function',
-    name: 'updateOracleAddresses',
-    inputs: [
-      { name: '_newPullOracle', type: 'address', internalType: 'address' },
-      { name: '_newStorageOracle', type: 'address', internalType: 'address' }
-    ],
     outputs: [],
     stateMutability: 'nonpayable'
   },
@@ -297,25 +254,6 @@ const PRED_ABI = [
   },
   {
     type: 'event',
-    name: 'OracleAddressUpdated',
-    inputs: [
-      {
-        name: 'newPullOracle',
-        type: 'address',
-        indexed: true,
-        internalType: 'address'
-      },
-      {
-        name: 'newStorageOracle',
-        type: 'address',
-        indexed: true,
-        internalType: 'address'
-      }
-    ],
-    anonymous: false
-  },
-  {
-    type: 'event',
     name: 'OwnershipTransferred',
     inputs: [
       {
@@ -358,9 +296,9 @@ const PRED_ABI = [
       },
       {
         name: 'closePrice',
-        type: 'uint256',
+        type: 'int256',
         indexed: false,
-        internalType: 'uint256'
+        internalType: 'int256'
       },
       { name: 'upWon', type: 'bool', indexed: false, internalType: 'bool' }
     ],
@@ -378,12 +316,6 @@ const PRED_ABI = [
       },
       {
         name: 'startTime',
-        type: 'uint256',
-        indexed: false,
-        internalType: 'uint256'
-      },
-      {
-        name: 'startPrice',
         type: 'uint256',
         indexed: false,
         internalType: 'uint256'

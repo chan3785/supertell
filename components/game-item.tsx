@@ -12,14 +12,13 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { useTokenInfo } from '@/utils/useTokenInfo';
 
-
 export const GameItem = ({ game }: any) => {
-  const tokenInfo = useTokenInfo(game.priceFeed);
+  const tokenInfo = useTokenInfo('0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43');
 
   if (!tokenInfo) {
     return <div>No token information available.</div>;
   }
-
+  const epoch = Number(game.epoch);
   return (
     <div key={game.gameId}>
       <Card className="my-4 w-96 max-w-sm cursor-pointer hover:shadow-lg">
@@ -38,8 +37,8 @@ export const GameItem = ({ game }: any) => {
         </CardHeader>
         <CardContent className="grid gap-4">
           <h1 className="text-lg font-bold">
-          Will {tokenInfo?.name ?? 'Token Name'} / USD go UP or DOWN <br/>
-          in {Number(game.duration) / 60} mins
+            Will {tokenInfo?.name ?? 'Token Name'} / USD go UP or DOWN <br />
+            in 24 hours
           </h1>
           <div className="flex items-center space-x-4 rounded-md border p-4">
             <div className="flex-1 space-y-2">
@@ -76,10 +75,7 @@ export const GameItem = ({ game }: any) => {
               {/* <div className="flex items-center">
                 Started: ${startPrice ? `${startPrice}` : 'Loading...'}
               </div> */}
-              <Link
-                href={`/games/${game.gameId}?key=${game.gameId}`}
-                key={game.gameId}
-              >
+              <Link href={`/games/${epoch}?key=${epoch}`} key={epoch}>
                 <Button className="w-26 flex h-10 items-center bg-[rgb(105,227,169)] font-semibold text-black">
                   bet now
                   <svg

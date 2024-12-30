@@ -76,7 +76,7 @@ export function GameDetailVote() {
       console.error('Transaction failed', error);
     }
   };
-
+  console.log('bet');
   const BetDown = async () => {
     console.log(walletAddress);
     try {

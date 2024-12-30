@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
 
 import "forge-std/Script.sol";
 import "../src/SuperTell.sol";
@@ -10,15 +10,12 @@ contract DeploySuperTell is Script {
         
         vm.startBroadcast(deployerPrivateKey);
 
-        // Supra Oracle addresses
-        address supraPullOracleAddress = 0x8B506d2616671b6742b968C18bEFdA1e665A9025;  // Pull oracle
-        address supraStorageAddress = 0x58e158c74DF7Ad6396C0dcbadc4878faC9e93d57;     // Storage oracle
+        // Supra Oracle address
+        address supraOracleAddress = 0x58e158c74DF7Ad6396C0dcbadc4878faC9e93d57;
+        
 
-        // Deploy SuperTell with both oracle addresses
-        SuperTell superTell = new SuperTell(
-            supraPullOracleAddress,
-            supraStorageAddress
-        );
+        // Deploy SuperTell
+        SuperTell superTell = new SuperTell(supraOracleAddress);
 
         // Log the deployed contract address
         console.log("SuperTell deployed at:", address(superTell));

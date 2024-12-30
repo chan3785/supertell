@@ -11,7 +11,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { ChartContainer, ChartConfig } from '@/components/ui/chart';
-import { useReadContract, useWriteContract } from 'wagmi';
+import { useAccount, useReadContract, useWriteContract } from 'wagmi';
 import PRED_ABI from '@/abi/INEOPRE.abi';
 import TOKEN_ABI from '@/abi/ERC20.abi';
 import { useSearchParams } from 'next/navigation';
@@ -30,7 +30,8 @@ export function GameDetailVote() {
   const [startPrice, setStartPrice] = useState<number | null>(null);
   const [betUp, setBetUp] = useState<boolean | null>(null); // Up/Down 선택 상태
   const [amount, setAmount] = useState(''); // Input 필드에 입력된 숫자
-
+  const account = useAccount();
+  const walletAddress = account.address;
   const { data: game }: any = useReadContract({
     ...wagmiContractConfig,
     functionName: 'getCurrentRound'
@@ -64,12 +65,12 @@ export function GameDetailVote() {
   const { writeContract } = useWriteContract();
 
   const BetUp = async () => {
-    console.log(ethers.parseUnits(amount, 18));
+    console.log(ethers.getAddress(walletAddress!));
     try {
       writeContract({
         ...wagmiContractConfig,
         functionName: 'betUp',
-        args: [ethers.parseUnits(amount, 18)]
+        args: [walletAddress, ethers.parseUnits(amount, 18)]
       });
     } catch (error) {
       console.error('Transaction failed', error);
@@ -77,12 +78,12 @@ export function GameDetailVote() {
   };
 
   const BetDown = async () => {
-    console.log(ethers.parseUnits(amount, 18));
+    console.log(walletAddress);
     try {
       writeContract({
         ...wagmiContractConfig,
         functionName: 'betDown',
-        args: [ethers.parseUnits(amount, 18)]
+        args: [walletAddress, ethers.parseUnits(amount, 18)]
       });
     } catch (error) {
       console.error('Transaction failed', error);

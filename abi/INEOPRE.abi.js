@@ -30,13 +30,6 @@ const PRED_ABI = [
   },
   {
     type: 'function',
-    name: 'MIN_BET_AMOUNT',
-    inputs: [],
-    outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
-    stateMutability: 'view'
-  },
-  {
-    type: 'function',
     name: 'TREASURY_FEE',
     inputs: [],
     outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
@@ -45,14 +38,20 @@ const PRED_ABI = [
   {
     type: 'function',
     name: 'betDown',
-    inputs: [],
+    inputs: [
+      { name: 'user', type: 'address', internalType: 'address' },
+      { name: 'amount', type: 'uint256', internalType: 'uint256' }
+    ],
     outputs: [],
     stateMutability: 'payable'
   },
   {
     type: 'function',
     name: 'betUp',
-    inputs: [],
+    inputs: [
+      { name: 'user', type: 'address', internalType: 'address' },
+      { name: 'amount', type: 'uint256', internalType: 'uint256' }
+    ],
     outputs: [],
     stateMutability: 'payable'
   },
@@ -66,6 +65,13 @@ const PRED_ABI = [
   {
     type: 'function',
     name: 'currentEpoch',
+    inputs: [],
+    outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
+    stateMutability: 'view'
+  },
+  {
+    type: 'function',
+    name: 'getCurrentEpoch',
     inputs: [],
     outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
     stateMutability: 'view'
@@ -113,6 +119,13 @@ const PRED_ABI = [
         ]
       }
     ],
+    stateMutability: 'view'
+  },
+  {
+    type: 'function',
+    name: 'getUserBetEpochs',
+    inputs: [{ name: 'user', type: 'address', internalType: 'address' }],
+    outputs: [{ name: '', type: 'uint256[]', internalType: 'uint256[]' }],
     stateMutability: 'view'
   },
   {

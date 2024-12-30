@@ -76,7 +76,6 @@ export function GameDetailVote() {
       console.error('Transaction failed', error);
     }
   };
-  console.log('bet');
   const BetDown = async () => {
     console.log(walletAddress);
     try {
@@ -350,8 +349,8 @@ export function GameDetailVote() {
           if (currentPrice !== null) {
             writeContract({
               ...wagmiContractConfig,
-              functionName: '_resolveRound',
-              args: [game.gameId]
+              functionName: 'claim',
+              args: [game.epoch]
             });
           } else {
             console.log('Current price is not available yet');

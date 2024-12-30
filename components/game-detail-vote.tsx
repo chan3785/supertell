@@ -24,7 +24,6 @@ import { ethers } from 'ethers';
 import { wagmiContractConfig } from '@/lib/contracts';
 
 export function GameDetailVote() {
-  const NEO_CONTRACT_ADDRESS = '0x7eB9c6631E539CCcd4f51eFb051f631797087B19';
   const searchParams = useSearchParams();
   const key = searchParams ? searchParams.get('key') : null;
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
@@ -65,10 +64,12 @@ export function GameDetailVote() {
   const { writeContract } = useWriteContract();
 
   const BetUp = async () => {
+    console.log(ethers.parseUnits(amount, 18));
     try {
       writeContract({
         ...wagmiContractConfig,
-        functionName: 'betUp'
+        functionName: 'betUp',
+        args: [ethers.parseUnits(amount, 18)]
       });
     } catch (error) {
       console.error('Transaction failed', error);
@@ -76,10 +77,12 @@ export function GameDetailVote() {
   };
 
   const BetDown = async () => {
+    console.log(ethers.parseUnits(amount, 18));
     try {
       writeContract({
         ...wagmiContractConfig,
-        functionName: 'betDown'
+        functionName: 'betDown',
+        args: [ethers.parseUnits(amount, 18)]
       });
     } catch (error) {
       console.error('Transaction failed', error);
@@ -319,7 +322,17 @@ export function GameDetailVote() {
             />
           </div>
         </div>
-        <div className="mr-3 flex items-center justify-end">
+        <div className="flex items-center gap-2">
+          <input
+            id="amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="0.01"
+            className="w-full border-b border-[#B6B6B6] bg-white px-2 text-right text-lg focus:outline-none"
+            step="0.01"
+            type="number"
+          />
+
           <Image
             src="https://assets.coingecko.com/coins/images/858/standard/GAS_512_512.png?1696501992"
             alt="Logo"
@@ -335,9 +348,8 @@ export function GameDetailVote() {
         onClick={() => {
           if (currentPrice !== null) {
             writeContract({
-              abi: PRED_ABI,
-              address: NEO_CONTRACT_ADDRESS,
-              functionName: 'endGame',
+              ...wagmiContractConfig,
+              functionName: '_resolveRound',
               args: [game.gameId]
             });
           } else {

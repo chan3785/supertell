@@ -10,7 +10,7 @@ export const GameList = () => {
 
   return (
     <div className="grid w-full grid-cols-1 md:grid-cols-3">
-      <GameItem key={games?.epoch} game={games} />
+      <GameItem game={games} />
     </div>
   );
 };

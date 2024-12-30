@@ -21,9 +21,9 @@ import Image from 'next/image';
 import { tokenInfos } from '@/constants';
 import { ComboboxDemo } from './command';
 import { ethers } from 'ethers';
+import { wagmiContractConfig } from '@/lib/contracts';
 
 export function GameDetailVote() {
-  const NEO_CONTRACT_ADDRESS = '0x45c2B0Eff2b489623C7e55083BE991f26b541B70';
   const searchParams = useSearchParams();
   const key = searchParams ? searchParams.get('key') : null;
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
@@ -32,25 +32,30 @@ export function GameDetailVote() {
   const [amount, setAmount] = useState(''); // Input 필드에 입력된 숫자
 
   const { data: game }: any = useReadContract({
-    address: NEO_CONTRACT_ADDRESS,
-    abi: PRED_ABI,
+    ...wagmiContractConfig,
     functionName: 'getCurrentRound'
   });
 
   useEffect(() => {
     console.log('get current round', game);
     if (game) {
-      const startPrice = Number(game.startPrice) / 10 ** 8;
+      let valueStr = game.startPrice.toString();
+
+      // 2. 정수부와 소수부 분리
+      let slicePart = valueStr.slice(0, 6) || '0';
+      const startPrice = Number(slicePart);
+      console.log('price', slicePart, Number(game.startPrice), game.startPrice);
+
       setStartPrice(startPrice);
-      const initialPriceChange = (Math.random() * 3 - 1) * 0.01;
+      const initialPriceChange = (Math.random() * 3 - 1) * 0.000001;
       const initialPrice = Math.max(startPrice * (1 + initialPriceChange), 0);
       setCurrentPrice(initialPrice);
 
       const intervalId = setInterval(() => {
-        const priceChange = (Math.random() * 3 - 1) * 0.01;
+        const priceChange = (Math.random() * 3 - 1) * 0.00001;
         const newPrice = Math.max(startPrice * (1 + priceChange), 0);
         setCurrentPrice(newPrice);
-      }, 5000);
+      }, 10000);
 
       return () => clearInterval(intervalId);
     }
@@ -59,11 +64,12 @@ export function GameDetailVote() {
   const { writeContract } = useWriteContract();
 
   const BetUp = async () => {
+    console.log(ethers.parseUnits(amount, 18));
     try {
       writeContract({
-        abi: PRED_ABI,
-        address: NEO_CONTRACT_ADDRESS,
-        functionName: 'betUp'
+        ...wagmiContractConfig,
+        functionName: 'betUp',
+        args: [ethers.parseUnits(amount, 18)]
       });
     } catch (error) {
       console.error('Transaction failed', error);
@@ -71,11 +77,12 @@ export function GameDetailVote() {
   };
 
   const BetDown = async () => {
+    console.log(ethers.parseUnits(amount, 18));
     try {
       writeContract({
-        abi: PRED_ABI,
-        address: NEO_CONTRACT_ADDRESS,
-        functionName: 'betDown'
+        ...wagmiContractConfig,
+        functionName: 'betDown',
+        args: [ethers.parseUnits(amount, 18)]
       });
     } catch (error) {
       console.error('Transaction failed', error);
@@ -183,7 +190,7 @@ export function GameDetailVote() {
                   {tokenInfo?.name ?? 'Token Name'}
                 </span>
               </div>
-              <div className="text-3xl font-bold">
+              <div className="mr-3 text-3xl font-bold">
                 $ {currentPrice ? `${currentPrice.toFixed(2)}` : 'Loading...'}
               </div>
 
@@ -216,7 +223,7 @@ export function GameDetailVote() {
           </div>
 
           <div className="flex flex-col">
-            <div className="font-bold">
+            <div className=" text-end font-bold">
               Started: ${' '}
               {startPrice ? `${startPrice?.toFixed(2)}` : 'Loading...'}
             </div>
@@ -320,7 +327,7 @@ export function GameDetailVote() {
             id="amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            placeholder={String(Number(game.minAmount) / 10 ** 18)}
+            placeholder="0.01"
             className="w-full border-b border-[#B6B6B6] bg-white px-2 text-right text-lg focus:outline-none"
             step="0.01"
             type="number"
@@ -341,9 +348,8 @@ export function GameDetailVote() {
         onClick={() => {
           if (currentPrice !== null) {
             writeContract({
-              abi: PRED_ABI,
-              address: NEO_CONTRACT_ADDRESS,
-              functionName: 'endGame',
+              ...wagmiContractConfig,
+              functionName: '_resolveRound',
               args: [game.gameId]
             });
           } else {

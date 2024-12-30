@@ -2,7 +2,7 @@ import { createConfig, http } from 'wagmi';
 
 //import { sepolia } from 'wagmi/chains';
 import { neoxMainnet } from "@/lib/neoX";
-import { metaMask } from 'wagmi/connectors';
+import { metaMask, injected, walletConnect } from 'wagmi/connectors';
 
 export const config = createConfig({
   chains: [neoxMainnet],

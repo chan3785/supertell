@@ -9,6 +9,7 @@ import { useReadContract } from 'wagmi';
 import PRED_ABI from '@/abi/INEOPRE.abi';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { wagmiContractConfig } from '@/lib/contracts';
 // 랜덤 지갑 주소를 생성하는 함수
 const generateRandomWalletAddress = () => {
   const characters =
@@ -25,25 +26,15 @@ const walletAddresses = Array.from({ length: 8 }, generateRandomWalletAddress);
 const shortenAddress = (address: any) => {
   return `${address.slice(0, 6)}...${address.slice(-6)}`;
 };
-const NEO_CONTRACT_ADDRESS = '0x45c2B0Eff2b489623C7e55083BE991f26b541B70';
 
 export const GameDetailComment = () => {
   const searchParams = useSearchParams();
   const key = searchParams ? searchParams.get('key') : null;
-  const [address, setTokenAddress] = useState(''); // Input 필드에 입력된 숫자
 
   const { data: game }: any = useReadContract({
-    address: NEO_CONTRACT_ADDRESS,
-    abi: PRED_ABI,
-    functionName: 'getGame',
-    args: [key]
+    ...wagmiContractConfig,
+    functionName: 'getCurrentRound'
   });
-
-  useEffect(() => {
-    if (game) {
-      setTokenAddress(game.bettingToken);
-    }
-  }, [game]);
 
   return (
     <div className="space-y-4">

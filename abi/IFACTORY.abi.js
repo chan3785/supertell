@@ -1,4 +1,4 @@
-const FACTORY_ABI = [
+const PRED_ABI = [
     {
       "type": "constructor",
       "inputs": [],
@@ -603,4 +603,4 @@ const FACTORY_ABI = [
     }
   ];
 
-export default FACTORY_ABI;
+export default PRED_ABI;

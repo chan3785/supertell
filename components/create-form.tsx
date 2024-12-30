@@ -14,7 +14,7 @@ import { ethers } from "ethers";
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FACTORY_ABI from '@/abi/IFACTORY.abi';
+import PRED_ABI from '@/abi/INEOPRE.abi';
 import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -140,7 +140,7 @@ export const CreateForm: React.FC = () => {
       
       // `writeContract` 호출
       const txResponse = await writeContract({
-        abi: FACTORY_ABI,
+        abi: PRED_ABI,
         address: ETHENA_FACTORY_ADDRESS,
         functionName: 'createGame',
         args: [

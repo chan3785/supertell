@@ -7,11 +7,12 @@ import { GameDetailVote } from '@/components/game-detail-vote';
 import { Badge } from '@/components/ui/badge';
 import { useReadContract } from 'wagmi';
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import FACTORY_ABI from '@/abi/IFACTORY.abi';
+import PRED_ABI from '@/abi/INEOPRE.abi';
 import { useSearchParams } from 'next/navigation';
 import { tokenInfos } from '@/constants';
 import { Card, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+
 
 export default function Page() {
   const [gameTitle, setGameTitle] = useState('');
@@ -23,13 +24,13 @@ export default function Page() {
   const searchParams = useSearchParams();
   const key = searchParams ? searchParams.get('key') : null;
 
-
   const { data: game }: any = useReadContract({
     address: ETHENA_FACTORY_ADDRESS,
-    abi: FACTORY_ABI,
+    abi: PRED_ABI,
     functionName: 'getGame',
     args: [key]
   });
+
 
 
   useEffect(() => {

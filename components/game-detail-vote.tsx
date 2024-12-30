@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import { ChartContainer, ChartConfig } from '@/components/ui/chart';
 import { useReadContract, useWriteContract } from 'wagmi';
-import FACTORY_ABI from '@/abi/IFACTORY.abi';
+import PRED_ABI from '@/abi/INEOPRE.abi';
 import TOKEN_ABI from '@/abi/ERC20.abi'
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -50,7 +50,7 @@ export function GameDetailVote() {
 
   const { data: game }: any = useReadContract({
     address: ETHENA_FACTORY_ADDRESS,
-    abi: FACTORY_ABI,
+    abi: PRED_ABI,
     functionName: 'getGame',
     args: [key]
   });
@@ -93,7 +93,7 @@ export function GameDetailVote() {
     try {
 
     writeContract({
-      abi: FACTORY_ABI,
+      abi: PRED_ABI,
       address: ETHENA_FACTORY_ADDRESS,
       functionName: 'bet',
       args: [game.gameId, betUp, betAmount],
@@ -420,7 +420,7 @@ export function GameDetailVote() {
         onClick={() => {
           if (currentPrice !== null) {
             writeContract({
-              abi: FACTORY_ABI,
+              abi: PRED_ABI,
               address: ETHENA_FACTORY_ADDRESS,
               functionName: 'endGame',
               args: [game.gameId]

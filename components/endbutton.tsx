@@ -2,7 +2,7 @@
           onClick={() => {
             if (currentPrice !== null) {
               writeContract({
-                abi: FACTORY_ABI,
+                abi: PRED_ABI,
                 address: ETHENA_FACTORY_ADDRESS,
                 functionName: 'endGame',
                 args: [

@@ -1,9 +1,10 @@
-{/* <button className='text-white'
+{
+  /* <button className='text-white'
           onClick={() => {
             if (currentPrice !== null) {
               writeContract({
                 abi: PRED_ABI,
-                address: ETHENA_FACTORY_ADDRESS,
+                address: NEO_CONTRACT_ADDRESS,
                 functionName: 'endGame',
                 args: [
                   game.gameId,
@@ -16,4 +17,5 @@
           }}
         >
           End
-      </button> */}
+      </button> */
+}

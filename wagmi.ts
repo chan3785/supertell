@@ -1,16 +1,16 @@
 import { createConfig, http } from 'wagmi';
 
 //import { sepolia } from 'wagmi/chains';
-import { neoxt4 } from "@/lib/neoX";
+import { neoxMainnet } from "@/lib/neoX";
 import { metaMask } from 'wagmi/connectors';
 
 export const config = createConfig({
-  chains: [neoxt4],
+  chains: [neoxMainnet],
   connectors: [metaMask()],
   ssr: true,
   multiInjectedProviderDiscovery: false,
   transports: {
-    [neoxt4.id]: http()
+    [neoxMainnet.id]: http()
   }
 });
 

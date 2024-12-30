@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import Link from 'next/link';
 import { useReadContract } from 'wagmi';
-import FACTORY_ABI from '@/abi/IFACTORY.abi';
+import PRED_ABI from '@/abi/INEOPRE.abi';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 // 랜덤 지갑 주소를 생성하는 함수
@@ -36,7 +36,7 @@ export const GameDetailComment = () => {
 
 const { data: game }: any = useReadContract({
   address: ETHENA_FACTORY_ADDRESS,
-  abi: FACTORY_ABI,
+  abi: PRED_ABI,
   functionName: 'getGame',
   args: [key]
 });
